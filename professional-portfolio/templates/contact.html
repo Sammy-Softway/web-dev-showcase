@@ -1,10 +1,20 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% from 'bootstrap5/form.html' import render_form %}
+
+{% block title %}Contact Dev Siyanbola{% endblock %}
+
+{% block content %}
+<!-- Contact form-->
+<div class="row justify-content-center">
+    <div class="col-md-6 col-lg-5">
+        <h1 class="text-center">Get in touch</h1>
+        <p class="text-center text-muted">Let's work together!</p>
+        <!-- Render the form inside this centered layout box -->
+        {{ render_form(form, form_type="basic", button_map={"submit": "primary w-100"}) }}
+    </div>
+</div>
+
+{% include 'footer.html' %}
+
+{% endblock %}

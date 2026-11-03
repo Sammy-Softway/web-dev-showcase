@@ -1,10 +1,28 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <title>Title</title>
-</head>
-<body>
+{% extends "base.html" %}
 
-</body>
-</html>
+{% block title %}About Dev Siyanbola{% endblock %}
+
+{% block content %}
+<!-- About Section-->
+<section class="bg-light py-5">
+    <div class="container px-5">
+        <div class="row gx-5 justify-content-center">
+            <div class="col-xxl-8">
+                <div class="text-center my-5">
+                    <h2 class="display-5 fw-bolder"><span class="text-gradient d-inline">About Me</span></h2>
+                    <p class="lead fw-light mb-4">I'm a software engineer who loves building useful applications. I
+                        enjoy learning new technologies, solving problems and creating value through code.</p>
+                    <div class="d-flex justify-content-center fs-2 gap-4">
+                        <a class="text-gradient" href="#!">Python</a>
+                        <a class="text-gradient" href="#!">Flask</a>
+                        <a class="text-gradient" href="#!">SQL</a>
+                        <a class="text-gradient" href="#!">GitHub</a>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+{% include 'footer.html' %}
+{% endblock %}
