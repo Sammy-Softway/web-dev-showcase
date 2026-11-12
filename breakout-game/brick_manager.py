@@ -1,17 +1,19 @@
 from turtle import Turtle
 
+
 BASE_SIZE = 20
 STRETCH_WID = 1
 STRETCH_LEN = 3
 X_SPACING = 65       #(60px brick + 5px gap)
 Y_SPACING = 25       #(20px brick + 5px gap)
-START_X = -325
-START_Y = 220
+BRICK_START_X = -325
+BRICK_START_Y = 220
 ROW_NUMS = 5
 COLUMN_NUMS = 11
-ROW_COLORS = ["red", "orange", "yellow", "green", "blue"]
+ROW_COLORS = ["red", "blue", "yellow", "green", "orange"]
 BRICK_HEIGHT = BASE_SIZE * STRETCH_WID
 BRICK_WIDTH = BASE_SIZE * STRETCH_LEN
+
 
 class Brick(Turtle):
     def __init__(self, color, position):
@@ -27,12 +29,17 @@ class BrickManager:
         self.all_bricks = []
         self.create_wall()
 
-    def create_wall(self):
-        for row in range(ROW_NUMS):
-            color = ROW_COLORS[row]
-            y = START_Y - (row * Y_SPACING)
+    def create_wall(self, rows=ROW_NUMS):
+        for row in range(rows):
+            color = ROW_COLORS[row % len(ROW_COLORS)]
+            y = BRICK_START_Y - (row * Y_SPACING)
             for col in range(COLUMN_NUMS):
-                x = START_X + (col * X_SPACING)
+                x = BRICK_START_X + (col * X_SPACING)
 
                 new_brick = Brick(color, (x,y))
                 self.all_bricks.append(new_brick)
+
+    def remove_brick(self, brick):
+        if brick in self.all_bricks:
+            brick.hideturtle()
+            self.all_bricks.remove(brick)
