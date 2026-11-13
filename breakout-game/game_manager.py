@@ -65,7 +65,7 @@ class GameManager:
 
             if self.scoreboard.lives <= 0:
                 self.is_game_on = False
-                self.scoreboard.game_over("GAME OVER")
+                self.end_game("GAME OVER")
 
         self.check_brick_collisions()
 
@@ -99,9 +99,17 @@ class GameManager:
                         sleep(RESET_DELAY)
                     else:
                         self.is_game_on = False
-                        self.scoreboard.game_over("YOU WIN!")
+                        self.end_game("YOU WIN!")
 
                 break
+
+    def end_game(self, message):
+        self.is_game_on = False
+        if self.scoreboard.is_top_score():
+            name = self.screen.textinput("New High Score!", "Enter your initials (3 letters):")
+            self.scoreboard.add_top_score(name)
+        self.bricks.clear_board()
+        self.scoreboard.game_over(message)
 
     def run(self):
         while self.is_game_on:

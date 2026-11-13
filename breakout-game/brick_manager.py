@@ -43,3 +43,8 @@ class BrickManager:
         if brick in self.all_bricks:
             brick.hideturtle()
             self.all_bricks.remove(brick)
+
+    def clear_board(self):
+        for brick in self.all_bricks:
+            brick.hideturtle()
+        self.all_bricks.clear()
