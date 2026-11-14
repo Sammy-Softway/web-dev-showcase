@@ -82,7 +82,8 @@ class Scoreboard(Turtle):
 
     def save_scores(self):
         with open(DATA_FILE, "w") as file:
-            json.dump({"top_scores": self.top_scores}, file, indent=4)
+            data = {"top_scores": self.top_scores}
+            json.dump(data, file, indent=4)
 
     def is_top_score(self):
         if self.score <= 0:

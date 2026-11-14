@@ -61,7 +61,7 @@ class GameManager:
         if self.ball.ycor() <= BOTTOM_WALL:
             self.scoreboard.lose_life()
             self.ball.reset_position()
-            sleep(0.5)
+            sleep(RESET_DELAY)
 
             if self.scoreboard.lives <= 0:
                 self.is_game_on = False
