@@ -1,0 +1,46 @@
+{% extends "base.html" %}
+
+{% block title %}List of Cafes{% endblock %}
+
+{% block content %}
+
+{% if cafes %}
+<table>
+    <thead>
+    <tr>
+        <th>ID</th>
+        <th>Name</th>
+        <th>Map_url</th>
+        <th>Img_url</th>
+        <th>Location</th>
+        <th>Has Sockets</th>
+        <th>Has Toilet</th>
+        <th>Has Wifi</th>
+        <th>Can Take Calls</th>
+        <th>Seats</th>
+        <th>Coffee Price</th>
+    </tr>
+    </thead>
+    <tbody>
+    {% for cafe in cafes %}
+    <tr>
+        <td>{{ cafe.id }}</td>
+        <td>{{ cafe.name }}</td>
+        <td><a href="{{ cafe.map_url }}" target="_blank" rel="noopener noreferrer">Map Link</a></td>
+        <td><a href="{{ cafe.img_url }}" target="_blank" rel="noopener noreferrer">Image Link</a></td>
+        <td>{{ cafe.location }}</td>
+        <td>{{ "Yes" if cafe.has_sockets else "No" }}</td>
+        <td>{{ "Yes" if cafe.has_toilet else "No" }}</td>
+        <td>{{ "Yes" if cafe.has_wifi else "No" }}</td>
+        <td>{{ "Yes" if cafe.can_take_calls else "No" }}</td>
+        <td>{{ cafe.seats or "N/A" }}</td>
+        <td>{{ cafe.coffee_price or "N/A" }}</td>
+    </tr>
+    {% endfor %}
+    </tbody>
+</table>
+{% else %}
+<p>No cafes available yet.</p>
+{% endif %}
+
+{% endblock %}
