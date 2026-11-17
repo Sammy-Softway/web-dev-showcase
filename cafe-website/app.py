@@ -13,6 +13,7 @@ from models import db, Cafe
 # --- Configuration & Secrets ---
 load_dotenv()
 TOP_SECRET_KEY = os.environ["TOP_SECRET_KEY"]
+DEBUG_MODE = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
 
 # --- App & Extensions Setup ---
 app = Flask(__name__)
@@ -101,4 +102,4 @@ def delete_cafe(cafe_id):
     return redirect(url_for("home"))
 
 if __name__ == "__main__":
-    app.run(debug=True)
+    app.run(debug=DEBUG_MODE)
