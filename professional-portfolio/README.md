@@ -34,15 +34,25 @@ professional-portfolio/
    python -m venv venv
    source venv/bin/activate  # On Windows use: venv\Scripts\activate
    ```
-4. Install dependencies (e.g., Flask):
+4. **Install the required dependencies:**
    ```bash
-   pip install flask
+   pip install -r requirements.txt
    ```
-5. Start the development server:
+5. **Configure environment variables:**
+   Copy `.env.example` to `.env` and set your own secret key:
+   ```bash
+   cp .env.example .env
+   ```
+   Update `.env` for local development:
+   ```env
+   TOP_SECRET_KEY=your-random-secret-key
+   FLASK_DEBUG=True
+   ```
+6. Start the development server:
    ```bash
    python main.py
    ```
-6. Open your browser and go to `http://127.0.0.1:5000`.
+7. Open your browser and go to `http://127.0.0.1:5000`.
 
 ## Preview
 

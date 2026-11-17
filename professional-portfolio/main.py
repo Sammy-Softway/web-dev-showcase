@@ -1,19 +1,22 @@
-from flask import Flask, render_template, redirect
+import os
+
+from dotenv import load_dotenv
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
 from flask_wtf import FlaskForm
 from wtforms import StringField, SubmitField
 from wtforms.fields.simple import TextAreaField
 from wtforms.validators import DataRequired, Email
-import os
 
 
+# --- Configuration & Secrets ---
+load_dotenv()
 SECRET_KEY = os.environ.get("SECRET_KEY")
-
+DEBUG_MODE = os.environ.get("FLASK_DEBUG", "False").lower() == "true"
 
 app = Flask(__name__)
 app.secret_key = SECRET_KEY
 bootstrap = Bootstrap5(app)
-
 
 class MyForm(FlaskForm):
     name = StringField('Full Name', validators=[DataRequired()])
@@ -39,11 +42,11 @@ def contact():
     form = MyForm()
     if form.validate_on_submit():
         name = form.name.data
-        email = form.email.data
-        phone_number = form.phone_number.data
+
+        flash(f"{name} Thanks for contacting us")
+
+        return redirect(url_for('home'))
     return render_template('contact.html', form=form)
 
-
-
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(debug=DEBUG_MODE)
