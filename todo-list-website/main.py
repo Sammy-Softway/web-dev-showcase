@@ -1,10 +1,11 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask, render_template
+from flask import Flask, render_template, redirect, url_for, flash
 from flask_bootstrap import Bootstrap5
 
 from models import db, Todo
+from forms import TodoForm
 
 
 # --- Configuration & Secrets ---
@@ -27,8 +28,25 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    todos = db.session.execute(db.select(Todo)).scalars().all()
-    return render_template("index.html", todos=todos)
+    all_tasks = db.session.execute(db.select(Todo)).scalars().all()
+    return render_template("index.html", todos=all_tasks)
+
+@app.route("/add", methods=["GET", "POST"])
+def add_task():
+    form = TodoForm()
+
+    if form.validate_on_submit():
+        new_task = Todo(
+            title=form.title.data.strip(),
+            description=form.description.data.strip() if form.description.data else None,
+        )
+
+        db.session.add(new_task)
+        db.session.commit()
+        flash("Task added successfully!", "success")
+        return redirect(url_for("home"))
+
+    return render_template("add_task.html", form=form)
 
 if __name__ == "__main__":
     app.run(debug=DEBUG_MODE)
