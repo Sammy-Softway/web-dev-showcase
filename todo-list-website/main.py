@@ -1,9 +1,10 @@
 import os
 
 from dotenv import load_dotenv
-from flask import Flask
+from flask import Flask, render_template
+from flask_bootstrap import Bootstrap5
 
-from models import db
+from models import db, Todo
 
 
 # --- Configuration & Secrets ---
@@ -18,6 +19,7 @@ app.config["SECRET_KEY"] = TOP_SECRET_KEY
 app.config["SQLALCHEMY_DATABASE_URI"] = SQLALCHEMY_DATABASE_URI
 
 db.init_app(app)
+bootstrap = Bootstrap5(app)
 
 with app.app_context():
     db.create_all()
@@ -25,7 +27,8 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    pass
+    todos = db.session.execute(db.select(Todo)).scalars().all()
+    return render_template("index.html", todos=todos)
 
 if __name__ == "__main__":
     app.run(debug=DEBUG_MODE)
