@@ -28,7 +28,7 @@ with app.app_context():
 
 @app.route("/")
 def home():
-    all_tasks = db.session.execute(db.select(Todo)).scalars().all()
+    all_tasks = db.session.execute(db.select(Todo).order_by(Todo.created_at.desc())).scalars().all()
     return render_template("index.html", todos=all_tasks)
 
 @app.route("/add", methods=["GET", "POST"])
@@ -47,6 +47,15 @@ def add_task():
         return redirect(url_for("home"))
 
     return render_template("add_task.html", form=form)
+
+@app.route("/task/<int:task_id>")
+def task_detail(task_id):
+    task = db.get_or_404(Todo, task_id)
+    return render_template("task_detail.html", task=task)
+
+@app.errorhandler(404)
+def page_not_found(error):
+    return render_template("404.html"), 404
 
 if __name__ == "__main__":
     app.run(debug=DEBUG_MODE)

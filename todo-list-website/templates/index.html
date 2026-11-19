@@ -4,42 +4,50 @@
 
 {% block content %}
 <div class="row justify-content-center">
-  <div class="col-md-8">
+    <div class="col-md-8">
 
-    <!-- Dashboard Header -->
-    <div class="d-flex justify-content-between align-items-center mb-4">
-      <h1 class="h3 mb-0">My Tasks</h1>
-      <a href="{{ url_for('add_task') }}" class="btn btn-primary">+ New Task</a>
-    </div>
-
-    <!-- Task List -->
-    {% if todos %}
-      <ul class="list-group shadow-sm">
-        {% for todo in todos %}
-          <li class="list-group-item d-flex justify-content-between align-items-center">
-            <div>
-              <h5 class="mb-1">{{ todo.title }}</h5>
-              {% if todo.description %}
-                <p class="mb-0 text-muted small">{{ todo.description }}</p>
-              {% endif %}
-            </div>
-            <div class="d-flex gap-2">
-              <!-- Action buttons (Toggle, Edit, Delete) will be wired here in Stages 7–9 -->
-              <span class="badge bg-secondary">Pending</span>
-            </div>
-          </li>
-        {% endfor %}
-      </ul>
-    {% else %}
-      <!-- Empty State -->
-      <div class="card text-center py-5 shadow-sm">
-        <div class="card-body">
-          <h5 class="card-title text-muted">No tasks yet</h5>
-          <p class="card-text text-muted">Click "+ New Task" above to create your first todo item.</p>
+        <!-- Dashboard Header -->
+        <div class="d-flex justify-content-between align-items-center mb-4">
+            <h1 class="h3 mb-0">My Tasks</h1>
+            <a href="{{ url_for('add_task') }}" class="btn btn-primary">+ New Task</a>
         </div>
-      </div>
-    {% endif %}
 
-  </div>
+        <!-- Task List -->
+        {% if todos %}
+        <ul class="list-group shadow-sm">
+            {% for todo in todos %}
+            <li class="list-group-item d-flex justify-content-between align-items-center">
+                <div>
+                    <h5 class="mb-1">
+                        <a href="{{ url_for('task_detail', task_id=todo.id) }}" class="text-decoration-none text-dark">
+                            {{ todo.title }}
+                        </a>
+                    </h5>
+                    {% if todo.description %}
+                    <p class="mb-0 text-muted small">{{ todo.description }}</p>
+                    {% endif %}
+                </div>
+                <div class="d-flex gap-2">
+                    {% if todo.is_completed %}
+                    <span class="badge bg-success">Completed</span>
+                    {% else %}
+                    <!-- Action buttons (Toggle, Edit, Delete) will be wired here in Stages 7–9 -->
+                    <span class="badge bg-secondary">Pending</span>
+                    {% endif %}
+                </div>
+            </li>
+            {% endfor %}
+        </ul>
+        {% else %}
+        <!-- Empty State -->
+        <div class="card text-center py-5 shadow-sm">
+            <div class="card-body">
+                <h5 class="card-title text-muted">No tasks yet</h5>
+                <p class="card-text text-muted">Click "+ New Task" above to create your first todo item.</p>
+            </div>
+        </div>
+        {% endif %}
+
+    </div>
 </div>
 {% endblock %}
