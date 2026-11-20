@@ -46,7 +46,7 @@ def add_task():
         flash("Task added successfully!", "success")
         return redirect(url_for("home"))
 
-    return render_template("add_task.html", form=form, page_title="Add Task")
+    return render_template("task_form.html", form=form, page_title="Add Task")
 
 @app.route("/task/<int:task_id>")
 def task_detail(task_id):
@@ -73,7 +73,7 @@ def edit_task(task_id):
         flash("Task updated successfully!", "success")
         return redirect(url_for("task_detail", task_id=task.id))
 
-    return render_template("add_task.html", form=form, page_title="Edit Task")
+    return render_template("task_form.html", form=form, page_title="Edit Task")
 
 if __name__ == "__main__":
     app.run(debug=DEBUG_MODE)
