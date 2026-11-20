@@ -36,6 +36,9 @@
             <div class="card-footer text-muted small d-flex justify-content-between">
                 <span>Created: {{ task.created_at.strftime('%b %d, %Y at %I:%M %p UTC') }}</span>
                 <!-- Edit & Delete action buttons will go here in Stages 7–9 -->
+                <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit_task', task_id=task.id) }}">
+                    Edit
+                </a>
             </div>
         </div>
 

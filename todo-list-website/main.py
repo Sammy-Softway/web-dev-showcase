@@ -46,7 +46,7 @@ def add_task():
         flash("Task added successfully!", "success")
         return redirect(url_for("home"))
 
-    return render_template("add_task.html", form=form)
+    return render_template("add_task.html", form=form, page_title="Add Task")
 
 @app.route("/task/<int:task_id>")
 def task_detail(task_id):
@@ -54,8 +54,26 @@ def task_detail(task_id):
     return render_template("task_detail.html", task=task)
 
 @app.errorhandler(404)
-def page_not_found(error):
+def page_not_found(_error):
     return render_template("404.html"), 404
+
+@app.route("/task/<int:task_id>/edit", methods=["GET", "POST"])
+def edit_task(task_id):
+    task = db.get_or_404(Todo, task_id)
+
+    form = TodoForm(obj=task)
+    form.submit.label.text = "Save Changes"
+    if form.validate_on_submit():
+        task.title = (form.title.data or "").strip()
+        task.description = (form.description.data or "").strip() or None
+        task.is_completed = form.is_completed.data
+
+        db.session.commit()
+
+        flash("Task updated successfully!", "success")
+        return redirect(url_for("task_detail", task_id=task.id))
+
+    return render_template("add_task.html", form=form, page_title="Edit Task")
 
 if __name__ == "__main__":
     app.run(debug=DEBUG_MODE)

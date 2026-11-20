@@ -27,13 +27,16 @@
                     <p class="mb-0 text-muted small">{{ todo.description }}</p>
                     {% endif %}
                 </div>
-                <div class="d-flex gap-2">
+                <div class="d-flex align-items-center gap-2">
                     {% if todo.is_completed %}
                     <span class="badge bg-success">Completed</span>
                     {% else %}
-                    <!-- Action buttons (Toggle, Edit, Delete) will be wired here in Stages 7–9 -->
                     <span class="badge bg-secondary">Pending</span>
                     {% endif %}
+                    <!-- Action buttons (Toggle, Edit, Delete) will be wired here in Stages 7–9 -->
+                    <div class="d-flex gap-2">
+                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit_task', task_id=todo.id) }}">Edit</a>
+                    </div>
                 </div>
             </li>
             {% endfor %}
