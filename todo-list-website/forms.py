@@ -8,3 +8,6 @@ class TodoForm(FlaskForm):
     description = TextAreaField("Description", validators=[Optional()])
     is_completed = BooleanField("Is Completed")
     submit = SubmitField("Add Task")
+
+class ActionForm(FlaskForm):
+    pass

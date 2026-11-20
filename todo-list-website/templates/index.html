@@ -34,9 +34,13 @@
                     <span class="badge bg-secondary">Pending</span>
                     {% endif %}
                     <!-- Action buttons (Toggle, Edit, Delete) will be wired here in Stages 7–9 -->
-                    <div class="d-flex gap-2">
-                        <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit_task', task_id=todo.id) }}">Edit</a>
-                    </div>
+                    <a class="btn btn-outline-primary btn-sm" href="{{ url_for('edit_task', task_id=todo.id) }}">Edit</a>
+                    <form action="{{ url_for('toggle_task', task_id=todo.id) }}" method="POST">
+                        {{ form.hidden_tag() }}
+                        <button type="submit" class="btn btn-outline-success btn-sm">
+                        {% if todo.is_completed %} Undo {% else %} Complete {% endif %}
+                        </button>
+                    </form>
                 </div>
             </li>
             {% endfor %}
