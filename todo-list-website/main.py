@@ -91,5 +91,19 @@ def toggle_task(task_id):
     flash("Invalid request.", "danger")
     return redirect(url_for('home'))
 
+@app.route("/task/<int:task_id>/delete", methods=["POST"])
+def delete_task(task_id):
+    form = ActionForm()
+    if form.validate_on_submit():
+        task = db.get_or_404(Todo, task_id)
+
+        db.session.delete(task)
+        db.session.commit()
+        flash("Task deleted successfully!", "info")
+        return redirect(url_for("home"))
+
+    flash("Invalid request.", "danger")
+    return redirect(url_for("home"))
+
 if __name__ == "__main__":
     app.run(debug=DEBUG_MODE)
