@@ -9,8 +9,11 @@ class App(tk.Tk):
         self.title(config.WINDOW_TITLE)
         self.geometry(f"{config.WINDOW_WIDTH}x{config.WINDOW_HEIGHT}")
         self.config(bg=config.BG_COLOR, padx=20, pady=20)
+        self.status_label: tk.Label
+        self.text_area: tk.Text
 
         self._setup_ui()
+        self._bind_events()
 
     def _setup_ui(self) -> None:
         self.status_label = tk.Label(self,
@@ -29,3 +32,12 @@ class App(tk.Tk):
                                  highlightthickness=0)
         self.text_area.pack(fill="both", expand=True)
         self.text_area.focus_set()
+
+    def _bind_events(self) -> None:
+        self.text_area.bind("<Key>", self._on_key_press)
+
+    def _on_key_press(self, event: tk.Event) -> None:
+        if not event.char:
+            return
+
+        print(f"Valid keystroke: {event.keysym}")
