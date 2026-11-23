@@ -1,7 +1,8 @@
 from turtle import Screen
+from time import sleep
+
 from paddle import Paddle, PADDLE_HEIGHT, PADDLE_WIDTH, PADDLE_START_Y
 from ball import Ball
-from time import sleep
 from brick_manager import BrickManager, BRICK_HEIGHT, BRICK_WIDTH
 from scoreboard import Scoreboard, MAX_LEVEL
 
