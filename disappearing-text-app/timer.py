@@ -1,8 +1,16 @@
+"""Non-blocking inactivity countdown timer for Tkinter applications."""
+
 import tkinter as tk
 from typing import Callable
 
 
 class InactivityTimer:
+    """Manage a resettable countdown timer decoupled from UI widgets.
+
+    Schedules non-blocking ticks via Tkinter's event loop and notifies
+    the caller through `on_tick` and `on_timeout` callbacks.
+    """
+
     def __init__(
             self,
             root: tk.Misc,

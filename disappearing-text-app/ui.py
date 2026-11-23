@@ -1,3 +1,5 @@
+"""Main Tkinter user interface and event bindings for the writing app."""
+
 import tkinter as tk
 
 import config
@@ -5,6 +7,12 @@ from timer import InactivityTimer
 
 
 class App(tk.Tk):
+    """Main application window for the Disappearing Text Writing App.
+
+        Manages the editor layout, filters valid user input events, and
+        coordinates UI updates with the inactivity timer.
+        """
+
     def __init__(self):
         super().__init__()
         self.title(config.WINDOW_TITLE)
@@ -42,6 +50,8 @@ class App(tk.Tk):
 
     def _bind_events(self) -> None:
         self.text_area.bind("<Key>", self._on_key_press)
+        self.text_area.bind("<<Paste>>", self._on_paste)
+        self.protocol("WM_DELETE_WINDOW", self._on_close)
 
     def _on_key_press(self, event: tk.Event) -> None:
         if not event.char:
@@ -56,3 +66,10 @@ class App(tk.Tk):
     def _handle_timeout(self) -> None:
         self.text_area.delete("1.0", tk.END)
         self.status_label.config(text="Time's up! Start typing to begin...")
+
+    def _on_paste(self, event: tk.Event) -> None:
+        self.timer.reset()
+
+    def _on_close(self) -> None:
+        self.timer.stop()
+        self.destroy()

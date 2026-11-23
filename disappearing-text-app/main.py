@@ -1,3 +1,5 @@
+"""Entry point for launching the Disappearing Text Writing App."""
+
 from ui import App
 
 if __name__ == "__main__":

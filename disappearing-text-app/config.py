@@ -1,3 +1,5 @@
+"""Configuration constants and styling settings for the Disappearing Text Writing App."""
+
 INACTIVITY_LIMIT_SEC = 5
 WINDOW_TITLE = 'Disappearing Text Writing'
 WINDOW_WIDTH = 800
