@@ -2,6 +2,7 @@ import os
 
 import  requests
 from dotenv import load_dotenv
+from pathlib import Path
 
 
 load_dotenv()
@@ -38,3 +39,25 @@ def text_to_speech_bytes(text: str, voice_id: str = DEFAULT_VOICE_ID) -> bytes:
         raise RuntimeError(f"ElevenLabs API request failed: {e}") from e
 
     return response.content
+
+def save_audio_chunks(audio_chunks: list[bytes], output_path: str | Path) -> Path:
+    """Combine MP3 byte chunks and save them to a local .mp3 file."""
+    if not audio_chunks:
+        raise ValueError("Input audio chunks cannot be empty.")
+
+    path = Path(output_path)
+    if path.suffix.lower() != ".mp3":
+        path = path.with_suffix(".mp3")
+
+    try:
+        path.parent.mkdir(parents=True, exist_ok=True)
+        with path.open("wb") as audio_file:
+            for chunk in audio_chunks:
+                audio_file.write(chunk)
+    except OSError as e:
+        raise RuntimeError(f"Failed to save audio file to '{path}': {e}") from e
+
+    if path.stat().st_size == 0:
+        raise ValueError("Written audio file is empty.")
+
+    return path
