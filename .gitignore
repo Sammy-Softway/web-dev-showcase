@@ -3,10 +3,10 @@
 # For example we ignore the hidden files from Pycharm and VS Code.
 
 
-# Specific Files
+# Specific Files or Folders
 scores.json
 scratch.py
-
+output/
 
 # IDE Settings
 .idea/
